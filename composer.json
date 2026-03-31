@@ -1,0 +1,29 @@
+{
+    "name": "agenciafmd/filament-faqs",
+    "description": "Filament - FAQs",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Agência FMD",
+            "email": "joao.paulo@fmd.ag"
+        }
+    ],
+    "require": {
+        "php": "^8.4",
+        "agenciafmd/filament-admix": "v1.x-dev|dev-master"
+    },
+    "autoload": {
+        "psr-4": {
+            "Agenciafmd\\Faqs\\": "src/",
+            "Agenciafmd\\Faqs\\Database\\Factories\\": "database/factories/",
+            "Agenciafmd\\Faqs\\Database\\Seeders\\": "database/seeders/"
+        }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Agenciafmd\\Faqs\\Providers\\FaqServiceProvider"
+            ]
+        }
+    }
+}
