@@ -52,8 +52,6 @@ final class FaqsTable
                     ->button()
                     ->label($isReordering ? __('Disable reordering') : __('Enable reordering')),
             )
-            ->defaultSort(fn (Builder $query): Builder => $query->orderBy('is_active', 'desc')
-                ->orderBy('sort')
-                ->orderBy('name'));
+            ->defaultSort(fn (Builder $query): Builder => $query->sort());
     }
 }
