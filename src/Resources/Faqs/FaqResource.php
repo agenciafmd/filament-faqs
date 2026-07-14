@@ -24,8 +24,6 @@ final class FaqResource extends Resource
 {
     protected static ?string $model = Faq::class;
 
-    protected static ?int $navigationSort = 5;
-
     protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedQuestionMarkCircle;
 
     protected static ?string $recordTitleAttribute = 'name';
@@ -40,6 +38,16 @@ final class FaqResource extends Resource
     public static function getPluralModelLabel(): string
     {
         return __('Faqs');
+    }
+
+    public static function getNavigationSort(): ?int
+    {
+        return config('filament-faqs.navigation_sort');
+    }
+
+    public static function getNavigationGroup(): ?string
+    {
+        return config('filament-faqs.navigation_group');
     }
 
     #[Override]
