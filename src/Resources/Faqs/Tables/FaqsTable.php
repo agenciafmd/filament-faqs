@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Agenciafmd\Faqs\Resources\Faqs\Tables;
 
+use Filament\Actions\Action;
 use Filament\Actions\BulkActionGroup;
 use Filament\Actions\DeleteBulkAction;
 use Filament\Actions\EditAction;
@@ -26,9 +27,6 @@ final class FaqsTable
                     ->translateLabel()
                     ->sortable()
                     ->searchable(),
-                TextColumn::make('sort')
-                    ->translateLabel()
-                    ->sortable(),
                 ToggleColumn::make('is_active')
                     ->translateLabel()
                     ->sortable(),
@@ -48,6 +46,12 @@ final class FaqsTable
                     RestoreBulkAction::make(),
                 ]),
             ])
+            ->reorderable('sort')
+            ->reorderRecordsTriggerAction(
+                fn (Action $action, bool $isReordering) => $action
+                    ->button()
+                    ->label($isReordering ? __('Disable reordering') : __('Enable reordering')),
+            )
             ->defaultSort(fn (Builder $query): Builder => $query->orderBy('is_active', 'desc')
                 ->orderBy('sort')
                 ->orderBy('name'));

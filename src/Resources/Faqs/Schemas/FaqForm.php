@@ -42,10 +42,6 @@ final class FaqForm
                         RichEditorWithDefault::make(name: 'description', directory: 'faq/description')
                             ->translateLabel()
                             ->columnSpanFull(),
-                        TextInput::make('sort')
-                            ->translateLabel()
-                            ->numeric()
-                            ->minValue(0)
                     ])
                     ->collapsible()
                     ->columns()
