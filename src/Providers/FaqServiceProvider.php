@@ -42,6 +42,6 @@ final class FaqServiceProvider extends ServiceProvider
 
     private function registerConfigs(): void
     {
-        $this->mergeConfigFrom(__DIR__ . '/../../config/filament-faqs.php', 'local-faqs');
+        $this->mergeConfigFrom(__DIR__ . '/../../config/filament-faqs.php', 'filament-faqs');
     }
 }
