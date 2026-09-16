@@ -23,14 +23,7 @@ final class FaqForm
                     ->schema([
                         TextInput::make('name')
                             ->translateLabel()
-                            ->live(onBlur: true)
-                            ->afterStateUpdated(function (Get $get, Set $set, ?string $old, ?string $state) {
-                                if (($get('slug') ?? '') !== str($old)->slug()->toString()) {
-                                    return;
-                                }
-
-                                $set('slug', str($state)->slug()->toString());
-                            })
+                            ->generateSlug()
                             ->autofocus()
                             ->minLength(3)
                             ->maxLength(255)
@@ -51,7 +44,7 @@ final class FaqForm
                         Toggle::make('is_active')
                             ->translateLabel()
                             ->default(true)
-                            ->columnSpan(2),
+                            ->columnSpanFull(),
                         DateTimeEntry::make('created_at'),
                         DateTimeEntry::make('updated_at'),
                     ])

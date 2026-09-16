@@ -7,6 +7,9 @@ namespace Agenciafmd\Faqs\Database\Factories;
 use Agenciafmd\Faqs\Models\Faq;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
+/**
+ * @extends Factory<Faq>
+ */
 final class FaqFactory extends Factory
 {
     protected $model = Faq::class;
