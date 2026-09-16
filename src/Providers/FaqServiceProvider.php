@@ -36,7 +36,7 @@ final class FaqServiceProvider extends ServiceProvider
 
     private function bootTranslations(): void
     {
-        $this->loadTranslationsFrom(__DIR__ . '/../../lang', 'local-faqs');
+        $this->loadTranslationsFrom(__DIR__ . '/../../lang', 'filament-faqs');
         $this->loadJsonTranslationsFrom(__DIR__ . '/../../lang');
     }
 
