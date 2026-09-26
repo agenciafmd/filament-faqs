@@ -6,6 +6,7 @@ namespace Agenciafmd\Faqs\Database\Factories;
 
 use Agenciafmd\Faqs\Models\Faq;
 use Illuminate\Database\Eloquent\Factories\Factory;
+use Illuminate\Support\Str;
 
 /**
  * @extends Factory<Faq>
@@ -17,7 +18,7 @@ final class FaqFactory extends Factory
     public function definition(): array
     {
         $name = fake()->sentence(4);
-        $slug = str()->slug($name);
+        $slug = Str::slug($name);
 
         return [
             'is_active' => fake()->boolean(),

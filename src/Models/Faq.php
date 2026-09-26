@@ -22,27 +22,45 @@ use OwenIt\Auditing\Contracts\Auditable as AuditableContract;
 final class Faq extends Model implements AuditableContract
 {
     use Auditable;
+
+    /** @use HasFactory<FaqFactory> */
     use HasFactory;
+
     use Prunable;
     use SoftDeletes;
     use WithScopes;
 
+    /**
+     * @var array<string, 'asc'|'desc'>
+     */
     protected array $defaultSort = [
         'is_active' => 'desc',
         'sort' => 'asc',
         'name' => 'asc',
     ];
 
+    /**
+     * @return Builder<self>
+     */
     public function prunable(): Builder
     {
         return self::query()
             ->where('deleted_at', '<=', today()->subDays(30));
     }
 
+    /**
+     * Sem descrição, usa um parágrafo vazio: o renderer do Filament quebra com `null` ou string vazia.
+     *
+     * @return Attribute<RichContentRenderer, never>
+     */
     protected function frontDescription(): Attribute
     {
         return Attribute::make(
-            get: static fn (mixed $value, array $attributes): RichContentRenderer => RichContentRenderer::make($attributes['description']),
+            get: static function (mixed $value, array $attributes): RichContentRenderer {
+                $description = $attributes['description'] ?? null;
+
+                return RichContentRenderer::make(is_string($description) && $description !== '' ? $description : '<p></p>');
+            },
         );
     }
 

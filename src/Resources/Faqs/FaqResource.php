@@ -42,12 +42,16 @@ final class FaqResource extends Resource
 
     public static function getNavigationSort(): ?int
     {
-        return config('filament-faqs.navigation_sort');
+        $navigationSort = config('filament-faqs.navigation_sort');
+
+        return is_int($navigationSort) ? $navigationSort : null;
     }
 
     public static function getNavigationGroup(): ?string
     {
-        return config('filament-faqs.navigation_group');
+        $navigationGroup = config('filament-faqs.navigation_group');
+
+        return is_string($navigationGroup) ? $navigationGroup : null;
     }
 
     #[Override]

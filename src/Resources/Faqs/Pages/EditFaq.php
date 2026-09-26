@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Agenciafmd\Faqs\Resources\Faqs\Pages;
 
 use Agenciafmd\Admix\Resources\Concerns\RedirectBack;
+use Agenciafmd\Faqs\Models\Faq;
 use Agenciafmd\Faqs\Resources\Faqs\FaqResource;
 use Filament\Actions\DeleteAction;
 use Filament\Actions\ForceDeleteAction;
@@ -18,6 +19,9 @@ final class EditFaq extends EditRecord
 
     protected static string $resource = FaqResource::class;
 
+    /**
+     * @var array<int, string>
+     */
     protected $listeners = [
         'auditRestored',
     ];
@@ -25,7 +29,9 @@ final class EditFaq extends EditRecord
     #[Override]
     public function getRelationManagers(): array
     {
-        if ($this->record->trashed()) {
+        $record = $this->getRecord();
+
+        if ($record instanceof Faq && $record->trashed()) {
             return [];
         }
 
