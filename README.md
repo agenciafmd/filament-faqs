@@ -1,12 +1,15 @@
-# Agenciafmd – Filament FAQs
+# Filament – FAQs
 
-Pacote de perguntas frequentes (FAQs) para o painel administrativo (Admix), baseado em Filament v4 e Laravel 12. Ele fornece o CRUD completo de FAQs, incluindo auditoria, filtros e ordenação personalizada.
+[![Downloads](https://img.shields.io/packagist/dt/agenciafmd/filament-faqs.svg?style=flat-square)](https://packagist.org/packages/agenciafmd/filament-faqs)
+[![Licença](https://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat-square)](LICENSE.md)
+
+Pacote de perguntas frequentes (FAQs) para o painel administrativo (Admix). Entrega o CRUD completo de FAQs (pergunta, slug, resposta, status e ordenação), com filtros, lixeira e auditoria.
 
 ## Requisitos
 
 - PHP ^8.4
-- Laravel ^12.0
-- Filament ^4.0
+- Laravel ^12.0 | ^13.0
+- Filament ^5.0
 - agenciafmd/filament-admix v1.x-dev | dev-master
 
 ## Instalação
@@ -23,15 +26,27 @@ composer require agenciafmd/filament-faqs
 php artisan migrate
 ```
 
-3. (Opcional) Popule o banco:
+3. Populando o banco com dados de testes
 
-```bash
-php artisan db:seed --class=Agenciafmd\\Faqs\\Database\\Seeders\\FaqSeeder
+Adicione o seeder no `database/seeders/DatabaseSeeder.php`:
+
+```php
+use Agenciafmd\Faqs\Database\Seeders\FaqSeeder;
+
+$this->call([
+    FaqSeeder::class,
+]);
 ```
 
-## Ativando no painel Filament
+Ou rode o seeder manualmente:
 
-Este pacote inclui um Plugin Filament que registra o `FaqResource` automaticamente. Adicione o plugin na config do admix `config/filament-admix.php`:
+```bash
+php artisan db:seed --class="Agenciafmd\Faqs\Database\Seeders\FaqSeeder"
+```
+
+## Ativando no painel
+
+O pacote inclui o plugin `FaqsPlugin`, que registra o `FaqResource`. Adicione-o na config do Admix `config/filament-admix.php`:
 
 ```php
 use Agenciafmd\Faqs\FaqsPlugin;
@@ -43,18 +58,7 @@ return [
 ];
 ```
 
-Após isso, o menu "Perguntas frequentes" aparecerá no painel, com as páginas de Listar, Criar e Editar.
-
-## Recursos incluídos
-
-- Model: `Agenciafmd\Faqs\Models\Faq` (Soft Deletes, HasFactory, Auditing e limpeza programada via `prunable()`)
-- Migração: cria a tabela `faqs` com campos principais (`name`, `slug` único, `description`, `is_active`, `sort`, timestamps e soft deletes)
-- Factory e Seeder: `FaqFactory` e `FaqSeeder`
-- Resource Filament: `FaqResource` com páginas `ListFaqs`, `CreateFaq`, `EditFaq`
-- Formulário: `FaqForm` com seções "General" e "Information"
-- Tabela: `FaqsTable` com colunas, filtros e ordenação padrão por `sort`
-- Serviço: `FaqService`
-- Traduções pt_BR prontas
+Após isso, o menu **Perguntas frequentes** aparecerá no painel, com as páginas de Listar, Criar e Editar.
 
 ## Configuração
 
@@ -63,12 +67,28 @@ Arquivo: `config/filament-faqs.php`
 ```php
 return [
     'name' => 'FAQs',
+    'navigation_group' => null,
+    'navigation_sort' => 11,
 ];
 ```
 
+| Chave | Padrão | Descrição |
+|---|---|---|
+| `name` | `FAQs` | Nome do pacote. |
+| `navigation_group` | `null` | Grupo do menu em que o Resource aparece. |
+| `navigation_sort` | `11` | Posição do item no menu. |
+
+O pacote não publica o arquivo de config. Para sobrescrever, crie `config/filament-faqs.php` no projeto; ele é mesclado com o do pacote.
+
+FAQs excluídas há mais de 30 dias são removidas definitivamente pelo `model:prune`, agendado diariamente às 03h (os minutos vêm de `filament-admix.schedule.minutes`).
+
+## Permissões
+
+O `FaqResource` entra automaticamente no controle de acesso por Grupos do Admix, com as permissões de visualizar, criar, editar, excluir, restaurar e auditoria. Usuário sem grupo é administrador e tem acesso total. Não há permissões extras.
+
 ## Auditoria
 
-O `FaqResource` inclui o relation manager `Tapp\FilamentAuditing\RelationManagers\AuditsRelationManager`, exibindo o histórico de auditorias quando o pacote `tapp/filament-auditing` for utilizado pelo projeto via `filament-admix`.
+O `FaqResource` inclui o relation manager `Tapp\FilamentAuditing\RelationManagers\AuditsRelationManager`, exibindo o histórico de auditorias do registro (o `tapp/filament-auditing` é instalado pelo `filament-admix`).
 
 ## Licença
 
