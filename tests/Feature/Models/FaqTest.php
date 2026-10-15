@@ -8,7 +8,7 @@ use Agenciafmd\Faqs\Models\Faq;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
-uses(TestCase::class, RefreshDatabase::class);
+pest()->extend(TestCase::class)->use(RefreshDatabase::class);
 
 it('renders an empty paragraph when the faq has no description', function (): void {
     $faq = Faq::factory()->make(['description' => null]);
