@@ -17,11 +17,13 @@ final class EditFaq extends EditRecord
 {
     use RedirectBack;
 
+    #[Override]
     protected static string $resource = FaqResource::class;
 
     /**
      * @var array<int, string>
      */
+    #[Override]
     protected $listeners = [
         'auditRestored',
     ];

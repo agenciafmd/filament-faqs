@@ -22,10 +22,13 @@ use Tapp\FilamentAuditing\RelationManagers\AuditsRelationManager;
 
 final class FaqResource extends Resource
 {
+    #[Override]
     protected static ?string $model = Faq::class;
 
+    #[Override]
     protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedQuestionMarkCircle;
 
+    #[Override]
     protected static ?string $recordTitleAttribute = 'name';
 
     #[Override]

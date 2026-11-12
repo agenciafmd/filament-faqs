@@ -11,6 +11,7 @@ use Override;
 
 final class ListFaqs extends ListRecords
 {
+    #[Override]
     protected static string $resource = FaqResource::class;
 
     #[Override]

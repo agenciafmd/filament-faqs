@@ -6,12 +6,14 @@ namespace Agenciafmd\Faqs\Database\Factories;
 
 use Agenciafmd\Faqs\Models\Faq;
 use Illuminate\Database\Eloquent\Factories\Factory;
+use Override;
 
 /**
  * @extends Factory<Faq>
  */
 final class FaqFactory extends Factory
 {
+    #[Override]
     protected $model = Faq::class;
 
     public function definition(): array
